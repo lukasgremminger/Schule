@@ -3,23 +3,23 @@ document.querySelector("#button").addEventListener("click", arraysort);
 function arraysort() {
   let arr = document.querySelector("#zahlen").value.split(",").map(Number);
   switch (document.querySelector("#dropdown").value) {
-    case "bubblesort":
-      bubblesort(arr);
+    case "Bubblesort":
+      bubbleSort(arr);
       break;
-    case "insertionsort":
-      insertionsort(arr);
+    case "Insertionsort":
+      insertionSort(arr);
       break;
-    case "selectionsort":
-      selectionsort(arr);
+    case "Selectionsort":
+      selectionSort(arr);
       break;
-    case "quicksort":
-      quicksort(arr);
+    case "Quicksort":
+      quickSort(arr, 0, arr.length - 1);
       break;
   }
   document.querySelector("#output").innerHTML = arr.toString();
 }
 
-function bubblesort(arr) {
+function bubbleSort(arr) {
   let unsorted = true;
   while (unsorted) {
     unsorted = false;
@@ -48,7 +48,7 @@ function insertionsort(arr) {
   }
 }
 
-function selectionsort(arr) {
+function selectionSort(arr) {
   let a;
   let ismallNr;
   for (let i = 0; i < arr.length; i++) {
@@ -64,26 +64,34 @@ function selectionsort(arr) {
   }
 }
 
-function quicksort(arr) {
-  let pivot = arr.length - 1;
-  sortpivot();
+function quickSort(arr, left, right) {
+  var len = arr.length,
+    pivot,
+    partitionIndex;
+
+
+  if (left < right) {
+    pivot = right;
+    partitionIndex = partition(arr, pivot, left, right);
+    quickSort(arr, left, partitionIndex - 1);
+    quickSort(arr, partitionIndex + 1, right);
+  }
 }
-function sortpivot(start, end) {
-let left = start;
-let right = end;
-let temp;
-while(){
-while (left <= pivot) {
-left++;
+
+function partition(arr, pivot, left, right) {
+  var pivotValue = arr[pivot],
+    partitionIndex = left;
+  for (var i = left; i < right; i++) {
+    if (arr[i] < pivotValue) {
+      swap(arr, i, partitionIndex);
+      partitionIndex++;
+    }
+  }
+  swap(arr, right, partitionIndex);
 }
-while (right > pivot){
-right--;
-}
-swap(left, right)
-}
-}
-function swap(arr, a, b) {
-temp = a;
-a = b;
-b = temp;
+
+function swap(arr, i, j) {
+  var temp = arr[i];
+  arr[i] = arr[j];
+  arr[j] = temp;
 }
